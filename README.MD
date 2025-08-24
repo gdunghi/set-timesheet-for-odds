@@ -30,3 +30,12 @@ SET_PROJECT_NAME=จ้าง Outsource โครงการ FundConnext ปร
 node --env-file=.env basecamp-checkins.js
 
 ```
+
+
+### TODO
+- [ ] confirm before send timesheet to SET 
+- [ ] Add error handling
+- [ ] Add logging
+- [ ] Add unit tests
+- [ ] Add more features
+- [ ] Improve code quality
