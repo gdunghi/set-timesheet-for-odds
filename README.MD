@@ -27,7 +27,7 @@ SET_PROJECT_NAME=จ้าง Outsource โครงการ FundConnext ปร
 
 ### Start
 ```shell
-node --env-file=.env basecamp-checkins.js
+node --env-file=.env index.js
 
 ```
 
