@@ -1,9 +1,6 @@
-#!/usr/bin/env node
 import axios from "axios";
 import open from "open";
 import fs from "fs";
-import {openHTML} from "./generate-html.js";
-import {sendTimesheet} from "./set-timesheet.js";
 import http from "http";
 
 const TOKEN_FILE = `${process.env.HOME}/.basecamp_token.json`;
@@ -175,23 +172,26 @@ function processContent(content) {
   return content.trim();
 }
 
-
-getAccessToken().then((accessToken) => {
+/**
+ * ดาวน์โหลด Check-ins ของเดือนนี้
+ * @returns {Promise<{setTimesheet: *, oddsWorkingDays: number}>}
+ */
+export function downloadCheckIns() {
   result = [];
-  return fetchCheckIns(accessToken, 1)
-    .then(async (result) => {
-      const processedContent = result.map(r => ({
-        ...r,
-        content: processContent(r.content || "")
-      }));
-      const oddsWorkingDays = processedContent.filter(isAfterLastMonth25).filter(isBeforeMonth26).length
-      console.log("total ODDS MD =", oddsWorkingDays);
-      const setWorklog = processedContent.filter(d => d.createdAt >= getFirstDateOfMonth()).sort((a, b) => a.createdAt - b.createdAt);
-      await openHTML(setWorklog, oddsWorkingDays);
-      await sendTimesheet(setWorklog).catch((error) => {
-        console.log(error)
-      });
 
-    });
-})
+  return getAccessToken().then((accessToken) => {
+    return fetchCheckIns(accessToken, 1)
+      .then(async (checkins) => {
+        return  checkins.map(r => ({
+          ...r,
+          content: processContent(r.content || "")
+        }));
+      }).then((checkins) => {
+        const oddsWorkingDays = checkins.filter(isAfterLastMonth25).filter(isBeforeMonth26).length
+        console.log("total ODDS MD =", oddsWorkingDays);
+        const setTimesheet = checkins.filter(d => d.createdAt >= getFirstDateOfMonth()).sort((a, b) => a.createdAt - b.createdAt);
+        return {setTimesheet, oddsWorkingDays};
+      });
+  });
+}
 

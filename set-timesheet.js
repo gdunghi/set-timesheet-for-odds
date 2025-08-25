@@ -79,7 +79,9 @@ export async function sendTimesheet(baseCampTimesheet) {
 
   const initialTimesheet = await get(url, process.env.SET_AUTHORIZATION)
     .then((result) => {
-      if(result.status !== 200) {}
+      if (result.status !== 200) {
+        throw Error("Unauthorized to access SET portal API");
+      }
       result.days.forEach(day => day.date = new Date(day.date));
       return result;
     });
