@@ -79,7 +79,7 @@ export async function sendTimesheet(baseCampTimesheet) {
 
   const initialTimesheet = await get(url, process.env.SET_AUTHORIZATION)
     .then((result) => {
-      if (result.status !== 200) {
+      if (result.status === 401) {
         throw Error("Unauthorized to access SET portal API");
       }
       result.days.forEach(day => day.date = new Date(day.date));
@@ -110,9 +110,12 @@ export function mergeTimesheet(initial, basecamp) {
 
     if (set.date === bcSorted[basecampIndex]?.createdAt) {
       set.remark = bcSorted[basecampIndex].content;
+      set.daily = "FULL_DAY"
       basecampIndex++;
     } else if (bcSorted[basecampIndex]) {
       set.remark = bcSorted[basecampIndex].content;
+      set.remark = bcSorted[basecampIndex].content;
+      set.daily = "FULL_DAY"
       basecampIndex++;
     }
     return set;
