@@ -4,7 +4,7 @@ import fs from "fs";
 import http from "http";
 
 const TOKEN_FILE = `${process.env.HOME}/.basecamp_token.json`;
-const PORT = 102938;
+const PORT = 19283;
 
 async function getAccessToken() {
   if (fs.existsSync(TOKEN_FILE)) {
@@ -12,7 +12,7 @@ async function getAccessToken() {
   }
 
   return new Promise(async (resolve, reject) => {
-    const authUrl = `https://launchpad.37signals.com/authorization/new?type=web_server&client_id=${process.env.BASECAMP_CLIENT_ID}&redirect_uri=${encodeURIComponent(process.env.REDIRECT_URI)}`;
+    const authUrl = `https://launchpad.37signals.com/authorization/new?type=web_server&client_id=${process.env.BASECAMP_CLIENT_ID}&redirect_uri=${encodeURIComponent(process.env.BASECAMP_REDIRECT_URI)}`;
     await open(authUrl);
 
     // 2. รอรับ code
