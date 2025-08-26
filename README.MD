@@ -2,7 +2,7 @@
 ### Installation
 ```shell
 git clone
-cd basecamp-checkins
+cd set-timesheet-for-odd
 npm install
 ```
 
