@@ -13,8 +13,7 @@ npm install
 ```
 CLIENT_ID=your_basecamp_account_id
 CLIENT_SECRET=your_basecamp_access_token
-REDIRECT_URI=your_basecamp_project_id
-BASECAMP_PROJECT_ID=your_basecamp_checkin_id
+REDIRECT_URI=http://localhost:3000/callbac
 BASECAMP_PROJECT_ID=your_basecamp_project_id
 BASECAMP_BUCKET_ID=your_basecamp_bucket_id
 BASECAMP_QUESTION_ID=your_basecamp_question_id
